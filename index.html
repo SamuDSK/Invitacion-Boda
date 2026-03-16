@@ -97,17 +97,17 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
 .hero-date span{font-size:clamp(.58rem,2.8vw,.68rem);letter-spacing:.3em;color:var(--muted);text-transform:uppercase;white-space:nowrap}
 
 /* ── SLIDE 2: COUNTDOWN ── */
-#slide-2{background:#F2F0EB}
+#slide-2{background:linear-gradient(160deg,#eaf4e2 0%,#F2F0EB 50%,#e8f0e0 100%)}
 .countdown-grid{display:flex;gap:clamp(.6rem,3vw,1.4rem);justify-content:center;margin-top:1.4rem;width:100%}
 .count-box{flex:1;max-width:88px;display:flex;flex-direction:column;align-items:center}
-.count-num{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,8vw,3.5rem);font-weight:300;color:var(--text);width:100%;aspect-ratio:1;border:1px solid var(--rose);display:flex;align-items:center;justify-content:center;position:relative;background:#F2F0EB}
+.count-num{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,8vw,3.5rem);font-weight:300;color:var(--text);width:100%;aspect-ratio:1;border:1px solid var(--rose);display:flex;align-items:center;justify-content:center;position:relative;background:rgba(234,244,226,0.6)}
 .count-num::before,.count-num::after{content:'';position:absolute;width:7px;height:7px;border-color:var(--gold);border-style:solid}
 .count-num::before{top:-1px;left:-1px;border-width:1px 0 0 1px}
 .count-num::after{bottom:-1px;right:-1px;border-width:0 1px 1px 0}
 .count-label{font-size:clamp(.47rem,1.8vw,.57rem);letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-top:.55rem}
 
 /* ── SLIDE 3: DETAILS ── */
-#slide-3{background:#F2F0EB;justify-content:flex-start;padding-top:max(2rem,env(safe-area-inset-top))}
+#slide-3{background:linear-gradient(160deg,#eaf4e2 0%,#F2F0EB 50%,#e8f0e0 100%);justify-content:flex-start;padding-top:max(2rem,env(safe-area-inset-top))}
 .detail-list{width:100%;max-width:400px;margin-top:1.2rem;display:flex;flex-direction:column;overflow-y:auto;max-height:calc(100dvh - 140px)}
 .detail-list::-webkit-scrollbar{display:none}
 .detail-row{display:flex;align-items:center;gap:1.1rem;padding:1.2rem 1.4rem;background:rgba(255,255,255,0.6);border-bottom:1px solid var(--rose)}
@@ -141,7 +141,7 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
 .prog-time{font-family:'Jost',sans-serif;font-weight:200;font-size:clamp(.72rem,3vw,.88rem);color:var(--muted);letter-spacing:.08em;margin-top:.15rem}
 
 /* ── SLIDE 4: RSVP ── */
-#slide-4{background:#F2F0EB;justify-content:flex-start;padding-top:max(2.5rem,env(safe-area-inset-top))}
+#slide-4{background:linear-gradient(160deg,#eaf4e2 0%,#F2F0EB 50%,#e8f0e0 100%);justify-content:flex-start;padding-top:max(2.5rem,env(safe-area-inset-top))}
 .rsvp-form{width:100%;max-width:400px;display:flex;flex-direction:column;gap:.95rem;margin-top:1.2rem;max-height:calc(100dvh - 200px);overflow-y:auto;padding-bottom:1rem}
 .rsvp-form::-webkit-scrollbar{display:none}
 .ff{display:flex;flex-direction:column;gap:.32rem;text-align:left}
@@ -154,10 +154,29 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
 .rb.sel{border-color:var(--gold);background:rgba(107,158,82,.1);color:var(--brown)}
 .sbtn{width:100%;padding:1.05rem;background:var(--gold);border:none;color:var(--ivory);font-family:'Jost',sans-serif;font-size:.68rem;letter-spacing:.4em;text-transform:uppercase;cursor:pointer;border-radius:0;margin-top:.4rem;transition:background .2s}
 .sbtn:active{background:var(--gold-lt)}
-.rsvp-ok{display:none;text-align:center;padding:2rem 1rem;border:1px solid var(--rose);margin-top:1.5rem}
-.rsvp-ok.show{display:block}
-.rsvp-ok p{font-family:'Cormorant Garamond',serif;font-size:clamp(1.3rem,5vw,1.7rem);font-style:italic;color:var(--brown);line-height:1.5}
-.rsvp-ok small{display:block;margin-top:.5rem;color:var(--muted);font-size:.72rem;letter-spacing:.1em}
+.rsvp-ok{display:none}
+.rsvp-ok.show{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  position:fixed;inset:0;z-index:500;
+  background:url('primerPlano.jpeg') center/cover no-repeat;
+}
+.rsvp-ok.show::before{content:'';position:absolute;inset:0;background:rgba(0,0,0,.38)}
+.rsvp-ok p{position:relative;z-index:1;font-family:'Cormorant Garamond',serif;font-size:clamp(1.4rem,6vw,2rem);font-style:italic;color:#fff;line-height:1.5;text-align:center;padding:0 2rem;text-shadow:0 2px 12px rgba(0,0,0,.5)}
+.rsvp-ok small{position:relative;z-index:1;display:block;margin-top:.6rem;color:rgba(255,255,255,.75);font-size:.72rem;letter-spacing:.18em;text-align:center}
+
+/* ── SLIDE FAQ: PREGUNTAS FRECUENTES ── */
+#slide-faq{background:linear-gradient(160deg,#eaf4e2 0%,#F2F0EB 50%,#e8f0e0 100%);justify-content:flex-start;padding-top:max(2rem,env(safe-area-inset-top))}
+.faq-list{width:100%;max-width:440px;margin-top:1.2rem;display:flex;flex-direction:column;gap:.55rem;overflow-y:auto;max-height:calc(100dvh - 140px)}
+.faq-list::-webkit-scrollbar{display:none}
+.faq-item{background:rgba(58,102,40,.1);border:1px solid var(--rose);border-radius:2px;overflow:hidden}
+.faq-q{padding:.85rem 1.1rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:.8rem;user-select:none;-webkit-tap-highlight-color:transparent}
+.faq-q span{font-family:'Cormorant Garamond',serif;font-size:clamp(.88rem,3.8vw,1.05rem);color:var(--brown);font-weight:400;line-height:1.3}
+.faq-icon{width:16px;height:16px;min-width:16px;fill:var(--gold);transition:transform .3s}
+.faq-item.open .faq-icon{transform:rotate(45deg)}
+.faq-a{max-height:0;overflow:hidden;transition:max-height .7s cubic-bezier(.4,0,.2,1)}
+.faq-a-inner{margin:.3rem .7rem .7rem;padding:.75rem 1rem;background:#f4faf0;border-left:2px solid var(--rose);font-size:.82rem;line-height:1.7;color:var(--muted)}
+.faq-a a{color:var(--gold);text-decoration:none}
+.faq-item.open .faq-a{max-height:300px}
 </style>
 </head>
 <body>
@@ -180,7 +199,7 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
 <!-- ══ SLIDES ══ -->
 <div id="progress">
   <div class="dot active"></div><div class="dot"></div>
-  <div class="dot"></div><div class="dot"></div><div class="dot"></div>
+  <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
 </div>
 <div id="nav-hint"><span>Desliza</span><div class="nav-arrow"></div></div>
 
@@ -333,23 +352,72 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
     </div>
   </div>
 
+  <!-- SLIDE FAQ: PREGUNTAS FRECUENTES -->
+  <div class="slide" id="slide-faq">
+    <span class="eyebrow s1">Resolvemos tus dudas</span>
+    <h2 class="slide-title s2">Preguntas frecuentes</h2>
+    <div class="faq-list s3">
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span>¿Puedo llevar acompañante?</span>
+          <svg class="faq-icon" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">Al enviar la invitación se han indicado los nombres de las personas invitadas. Si tienes alguna duda sobre acompañantes, puedes consultarlo con nosotros.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span>¿Habrá parking disponible?</span>
+          <svg class="faq-icon" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">Sí, habrá plazas de aparcamiento para los invitados en la entrada del hotel y en el parking subterráneo del mismo.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span>¿Qué código de vestimenta tengo que seguir?</span>
+          <svg class="faq-icon" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">Nuestra prioridad es que os sintáis cómodos, la idea sería ir acorde a una celebración especial. PD: Os rogamos que se respete el color blanco para la novia 😜</div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span>¿Se pueden tomar fotos y vídeos durante la ceremonia y a posteriori?</span>
+          <svg class="faq-icon" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">Sentiros libres de hacer fotos y vídeos en cualquier momento, pero os pedimos que disfrutéis de la boda con vuestros ojos y no a través de un teléfono. Ya va a haber profesionales encargados de inmortalizar los momentos más bonitos.</div></div>
+      </div>
+
+      <div class="faq-item">
+        <div class="faq-q">
+          <span>¿Puedo sorprender a los novios con un momento especial?</span>
+          <svg class="faq-icon" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+        </div>
+        <div class="faq-a"><div class="faq-a-inner">Sí, hemos dado luz verde para cualquier idea (abstenerse pedidas de mano), únicamente tendríais que contactar previamente con la organización del evento.<br><br>Contacto: <a href="mailto:eventos@achotelvalladolid.com">eventos@achotelvalladolid.com</a></div></div>
+      </div>
+
+    </div>
+  </div>
+
   <!-- SLIDE 4: RSVP -->
   <div class="slide" id="slide-4">
     <span class="eyebrow s1">Confirmación de asistencia</span>
     <h2 class="slide-title s2">¿Contamos contigo?</h2>
     <form class="rsvp-form s3" id="rsvpForm" onsubmit="submitRSVP(event)">
-      <div class="ff"><label>Nombre completo</label><input type="text" placeholder="Tu nombre y apellidos" required autocomplete="name"></div>
+      <div class="ff"><label>Nombre completo</label><input type="text" name="nombre" placeholder="Tu nombre y apellidos" required autocomplete="name"></div>
       <div class="ff"><label>Asistencia</label>
         <div class="rg"><div class="rb sel" onclick="selectAttend(this,'yes')">Asistiré 🎉</div><div class="rb" onclick="selectAttend(this,'no')">No podré</div></div>
-        <input type="hidden" id="attendValue" value="yes">
+        <input type="hidden" id="attendValue" name="asistencia" value="yes">
       </div>
-      <div class="ff" id="guestField"><label>Número de personas</label><select><option>Solo yo</option><option>2 personas</option><option>3 personas</option><option>4 personas</option></select></div>
-      <div class="ff"><label>Alergias o intolerancias</label><input type="text" placeholder="Ninguna · Gluten · Lactosa…"></div>
-      <div class="ff"><label>Mensaje para los novios</label><textarea placeholder="Escríbenos algo bonito…"></textarea></div>
-      <button type="submit" class="sbtn">Confirmar asistencia</button>
+      <div class="ff"><label>Alergias o intolerancias</label><input type="text" name="alergias" placeholder="Ninguna · Gluten · Lactosa…"></div>
+      <div class="ff"><label>Mensaje para los novios (Opcional)</label><textarea name="mensaje" placeholder="Escríbenos algo bonito…"></textarea></div>
+      <button type="submit" class="sbtn" id="rsvpBtn">Confirmar asistencia</button>
+      <p id="rsvpErr" style="display:none;text-align:center;font-size:.78rem;color:#c0392b;letter-spacing:.05em">Error enviando la confirmación. Inténtalo de nuevo.</p>
     </form>
     <div class="rsvp-ok" id="rsvpOk">
-      <p>¡Gracias! No podemos esperar para celebrarlo juntos.</p>
+      <p>¡Gracias! Tu confirmación ha sido registrada.</p>
       <small>Sandra &amp; Samuel · 19.06.2027</small>
     </div>
   </div>
@@ -547,13 +615,46 @@ function selectAttend(el, val) {
   document.querySelectorAll('.rb').forEach(function(b) { b.classList.remove('sel'); });
   el.classList.add('sel');
   document.getElementById('attendValue').value = val;
-  document.getElementById('guestField').style.display = val === 'yes' ? '' : 'none';
 }
 function submitRSVP(e) {
   e.preventDefault();
-  document.getElementById('rsvpForm').style.display = 'none';
-  document.getElementById('rsvpOk').classList.add('show');
+  var form = document.getElementById('rsvpForm');
+  var btn  = document.getElementById('rsvpBtn');
+  var err  = document.getElementById('rsvpErr');
+  var ENDPOINT = 'https://script.google.com/macros/s/AKfycbx1xcBKNwWmDM7uOTN0f1P_xawOtN2fPA8Ze6kbgOikx7psqh4QMEruCmi8VIx4fIPi/exec';
+
+  btn.disabled = true;
+  btn.textContent = 'Enviando…';
+  err.style.display = 'none';
+
+  var data = new FormData(form);
+
+  fetch(ENDPOINT, { method: 'POST', body: data })
+    .then(function(res) {
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      form.style.display = 'none';
+      document.getElementById('rsvpOk').classList.add('show');
+      form.reset();
+      document.querySelectorAll('.rb').forEach(function(b) { b.classList.remove('sel'); });
+      document.querySelector('.rb').classList.add('sel');
+      document.getElementById('attendValue').value = 'yes';
+    })
+    .catch(function() {
+      err.style.display = 'block';
+      btn.disabled = false;
+      btn.textContent = 'Confirmar asistencia';
+    });
 }
+
+// ══ FAQ ACCORDION ══
+document.querySelectorAll('.faq-q').forEach(function(q) {
+  q.addEventListener('click', function() {
+    var item = q.closest('.faq-item');
+    var wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(function(x) { x.classList.remove('open'); });
+    if (!wasOpen) item.classList.add('open');
+  });
+});
 
 // ══ HELPERS ══
 function fadeAudio(el, from, to, ms) {
