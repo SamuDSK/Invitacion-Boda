@@ -20,11 +20,14 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
 /* ══ INTRO ══ */
 #intro{
   position:fixed;inset:0;z-index:1000;
-  background:#0e1510;
+  background:#0e1510 url('previewP.png') center/cover no-repeat;
   display:flex;flex-direction:column;
   align-items:center;justify-content:center;
   cursor:pointer;-webkit-tap-highlight-color:transparent;user-select:none;
   transition:opacity .6s ease;
+}
+@media (pointer:coarse),(max-width:768px){
+  #intro{background-image:url('previewT.png')}
 }
 #intro.fade-out{opacity:0;pointer-events:none;}
 /* Canvas fills entire viewport — JS handles cover cropping */
@@ -84,8 +87,8 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 
 /* ── SLIDE 1: HERO ── */
-#slide-1{background:#1a1a1a url('previewP.jpg') center/cover no-repeat;overflow:hidden}
-@media (pointer:coarse),(max-width:768px){#slide-1{background-image:url('previewT.jpg')}}
+#slide-1{background:#1a1a1a url('previewP.png') center/cover no-repeat;overflow:hidden}
+@media (pointer:coarse),(max-width:768px){#slide-1{background-image:url('previewT.png')}}
 
 
 
@@ -190,7 +193,14 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
 <!-- ══ INTRO ══ -->
 <div id="intro">
   <video id="envVideo" playsinline muted preload="auto"></video>
-  <div class="tap-hint" id="tapHint">
+  <!-- Imagen de portada: siempre visible encima del vídeo hasta que este arranca -->
+  <img id="introPoster" src="previewP.png"
+    style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;display:block;">
+  <script>(function(){
+    var isMob=/iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    document.getElementById('introPoster').src=isMob?'previewT.png':'previewP.png';
+  }());</script>
+  <div class="tap-hint" id="tapHint" style="position:relative;z-index:2">
     <div class="tap-ring">
       <svg viewBox="0 0 24 24"><path d="M9 11.24V7.5C9 6.12 10.12 5 11.5 5S14 6.12 14 7.5v3.74c1.21-.81 2-2.18 2-3.74C16 5.01 13.99 3 11.5 3S7 5.01 7 7.5c0 1.56.79 2.93 2 3.74zm9.84 4.63l-4.54-2.26c-.17-.07-.35-.11-.54-.11H13v-6c0-.83-.67-1.5-1.5-1.5S10 6.67 10 7.5v10.74l-3.43-.72c-.08-.01-.15-.03-.24-.03-.31 0-.59.13-.79.33l-.79.8 4.94 4.94c.27.27.65.44 1.06.44h6.79c.75 0 1.33-.55 1.44-1.28l.75-5.27c.01-.07.02-.14.02-.2 0-.62-.38-1.16-.91-1.38z"/></svg>
     </div>
@@ -209,20 +219,24 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
 
   <!-- SLIDE 1: HERO -->
   <div class="slide active" id="slide-1">
-    <!-- Video de fondo — reemplaza el src con tu vídeo -->
-    <video id="heroBgVideo" autoplay muted playsinline loop preload="auto"
-      style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none;">
+    <!-- Video de fondo -->
+    <video id="heroBgVideo" autoplay muted playsinline loop preload="auto" poster="previewP.png"
+      style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;pointer-events:none;">
       <source src="Video-sobre.mp4" type="video/mp4">
     </video>
-    <!-- Poster de respaldo visible hasta que el vídeo arranque -->
-    <div id="heroPoster" style="position:absolute;inset:0;z-index:0;background:center/cover no-repeat;pointer-events:none;transition:opacity .6s"></div>
-    <!-- Capa oscura para contraste sobre el video -->
-    <div style="position:absolute;inset:0;background:rgba(0,0,0,0.25);z-index:1;pointer-events:none"></div>
+    <!-- Script síncrono: cambia poster ANTES del primer paint según dispositivo -->
+    <script>(function(){var v=document.getElementById('heroBgVideo');if(v&&/iPhone|iPad|iPod|Android/i.test(navigator.userAgent))v.poster='previewT.png';}());</script>
+    <!-- Poster de refuerzo: imagen por encima del vídeo hasta que arranque, sin depender de eventos -->
+    <div id="heroPoster" style="position:absolute;inset:0;z-index:2;background:url('previewP.png') center/cover no-repeat;pointer-events:none;transition:opacity .8s"></div>
+    <!-- Script síncrono: ajusta imagen del heroPoster al mismo poster que el vídeo -->
+    <script>(function(){var p=document.getElementById('heroPoster');if(p&&/iPhone|iPad|iPod|Android/i.test(navigator.userAgent))p.style.backgroundImage="url('previewT.png')";}());</script>
+    <!-- Capa oscura para contraste -->
+    <div style="position:absolute;inset:0;background:rgba(0,0,0,0.25);z-index:3;pointer-events:none"></div>
     <!-- Contenido encima del vídeo -->
-    <div class="hero-line" style="position:relative;z-index:2"></div>
-    <p class="hero-tag" style="position:relative;z-index:2;color:rgba(255,255,255,0.85)">Os invitamos a nuestra boda</p>
-    <h1 class="hero-names" style="position:relative;z-index:2;color:#fff">Sndra<span class="amp">&amp;</span>Samuel</h1>
-    <div class="hero-date" style="position:relative;z-index:2"><span class="rule"></span><span style="color:rgba(255,255,255,0.8)">19 · Junio · 2027</span><span class="rule"></span></div>
+    <div class="hero-line" style="position:relative;z-index:4"></div>
+    <p class="hero-tag" style="position:relative;z-index:4;color:rgba(255,255,255,0.85)">Os invitamos a nuestra boda</p>
+    <h1 class="hero-names" style="position:relative;z-index:4;color:#fff">Sndra<span class="amp">&amp;</span>Samuel</h1>
+    <div class="hero-date" style="position:relative;z-index:4"><span class="rule"></span><span style="color:rgba(255,255,255,0.8)">19 · Junio · 2027</span><span class="rule"></span></div>
   </div>
 
   <!-- SLIDE 2: COUNTDOWN -->
@@ -471,10 +485,15 @@ var FRAMES = [
 ];
 // ══ INTRO VIDEO ══
 (function() {
-  var intro  = document.getElementById('intro');
-  var hint   = document.getElementById('tapHint');
-  var video  = document.getElementById('envVideo');
+  var intro        = document.getElementById('intro');
+  var hint         = document.getElementById('tapHint');
+  var video        = document.getElementById('envVideo');
+  var introPoster  = document.getElementById('introPoster');
   var played = false;
+
+  function hidePoster() {
+    if (introPoster) { introPoster.style.transition = 'opacity .4s'; introPoster.style.opacity = '0'; }
+  }
 
   // Selecciona el vídeo según dispositivo
   var isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ||
@@ -482,9 +501,16 @@ var FRAMES = [
   video.src = isMobile ? 'sobreT.mp4' : 'sobreP.mp4';
   video.load();
 
-  // Muestra el primer fotograma en cuanto los metadatos estén listos
-  video.addEventListener('loadedmetadata', function() {
-    video.currentTime = 0.001;
+  // Muestra el primer frame: play() silencioso → pausa inmediata → seek a 0.
+  // Esto fuerza al navegador a pintar el frame sin esperar interacción.
+  video.addEventListener('canplay', function() {
+    if (played) return;
+    video.play().then(function() {
+      video.pause();
+      video.currentTime = 0;
+    }).catch(function() {
+      // iOS sin gesto previo: no puede autoplay, el poster cubre el negro
+    });
   }, {once: true});
 
   function afterVideo() {
@@ -504,7 +530,8 @@ var FRAMES = [
     played = true;
     hint.style.transition = 'opacity .3s';
     hint.style.opacity = '0';
-    video.play().catch(function() { afterVideo(); });
+    video.currentTime = 0;
+    video.play().then(function() { hidePoster(); }).catch(function() { afterVideo(); });
   }
 
   intro.addEventListener('click', startVideo);
@@ -658,34 +685,20 @@ document.addEventListener("DOMContentLoaded", function() {
   var poster = document.getElementById("heroPoster");
   if (!video) return;
 
-  // Selecciona el poster según dispositivo
-  var isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ||
-                 (window.matchMedia && window.matchMedia('(pointer:coarse)').matches);
-  if (poster) poster.style.backgroundImage = "url('" + (isMobile ? 'previewT.jpg' : 'previewP.jpg') + "')";
+  // Oculta heroPoster en cuanto el vídeo está reproduciendo
+  function hidePoster() {
+    if (poster) poster.style.opacity = '0';
+  }
+  video.addEventListener('playing', hidePoster, { once: true });
 
-  // Fuerza carga y reproducción
+  // Intento de reproducción (Safari iOS necesita muted + play explícito)
   video.muted = true;
-  video.load();
-
-  function tryPlay() {
-    video.play().then(function() {
-      // Vídeo arrancado: oculta el poster
-      if (poster) poster.style.opacity = '0';
-    }).catch(function() {
-      // En iOS sin gesto: espera la primera interacción
-      document.addEventListener("touchstart", function() {
-        video.play().then(function() {
-          if (poster) poster.style.opacity = '0';
-        }).catch(function(){});
-      }, { once: true });
-    });
-  }
-
-  if (video.readyState >= 2) {
-    tryPlay();
-  } else {
-    video.addEventListener("canplay", tryPlay, { once: true });
-  }
+  video.play().catch(function() {
+    // Sin gesto del usuario (iOS): espera primer toque
+    document.addEventListener("touchstart", function() {
+      video.play().catch(function(){});
+    }, { once: true });
+  });
 });
 </script>
 </body>
