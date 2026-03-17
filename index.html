@@ -84,7 +84,8 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 
 /* ── SLIDE 1: HERO ── */
-#slide-1{background:#1a1a1a;overflow:hidden}
+#slide-1{background:#1a1a1a url('previewP.jpg') center/cover no-repeat;overflow:hidden}
+@media (pointer:coarse),(max-width:768px){#slide-1{background-image:url('previewT.jpg')}}
 
 
 
@@ -213,12 +214,14 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
       style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none;">
       <source src="Video-sobre.mp4" type="video/mp4">
     </video>
+    <!-- Poster de respaldo visible hasta que el vídeo arranque -->
+    <div id="heroPoster" style="position:absolute;inset:0;z-index:0;background:center/cover no-repeat;pointer-events:none;transition:opacity .6s"></div>
     <!-- Capa oscura para contraste sobre el video -->
     <div style="position:absolute;inset:0;background:rgba(0,0,0,0.25);z-index:1;pointer-events:none"></div>
     <!-- Contenido encima del vídeo -->
     <div class="hero-line" style="position:relative;z-index:2"></div>
     <p class="hero-tag" style="position:relative;z-index:2;color:rgba(255,255,255,0.85)">Os invitamos a nuestra boda</p>
-    <h1 class="hero-names" style="position:relative;z-index:2;color:#fff">Sandra<span class="amp">&amp;</span>Samuel</h1>
+    <h1 class="hero-names" style="position:relative;z-index:2;color:#fff">Sndra<span class="amp">&amp;</span>Samuel</h1>
     <div class="hero-date" style="position:relative;z-index:2"><span class="rule"></span><span style="color:rgba(255,255,255,0.8)">19 · Junio · 2027</span><span class="rule"></span></div>
   </div>
 
@@ -651,14 +654,37 @@ function fadeAudio(el, from, to, ms) {
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-  var video = document.getElementById("heroBgVideo");
-  if (video) {
-    video.muted = true;
-    video.play().catch(function() {
+  var video  = document.getElementById("heroBgVideo");
+  var poster = document.getElementById("heroPoster");
+  if (!video) return;
+
+  // Selecciona el poster según dispositivo
+  var isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ||
+                 (window.matchMedia && window.matchMedia('(pointer:coarse)').matches);
+  if (poster) poster.style.backgroundImage = "url('" + (isMobile ? 'previewT.jpg' : 'previewP.jpg') + "')";
+
+  // Fuerza carga y reproducción
+  video.muted = true;
+  video.load();
+
+  function tryPlay() {
+    video.play().then(function() {
+      // Vídeo arrancado: oculta el poster
+      if (poster) poster.style.opacity = '0';
+    }).catch(function() {
+      // En iOS sin gesto: espera la primera interacción
       document.addEventListener("touchstart", function() {
-        video.play();
+        video.play().then(function() {
+          if (poster) poster.style.opacity = '0';
+        }).catch(function(){});
       }, { once: true });
     });
+  }
+
+  if (video.readyState >= 2) {
+    tryPlay();
+  } else {
+    video.addEventListener("canplay", tryPlay, { once: true });
   }
 });
 </script>
