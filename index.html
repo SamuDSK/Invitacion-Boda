@@ -479,6 +479,11 @@ var FRAMES = [
   video.src = isMobile ? 'sobreT.mp4' : 'sobreP.mp4';
   video.load();
 
+  // Muestra el primer fotograma en cuanto los metadatos estén listos
+  video.addEventListener('loadedmetadata', function() {
+    video.currentTime = 0.001;
+  }, {once: true});
+
   function afterVideo() {
     intro.classList.add('fade-out');
     setTimeout(function() {
