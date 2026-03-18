@@ -53,8 +53,10 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
   0%,100%{transform:scale(1);box-shadow:0 0 0 0 rgba(107,158,82,.3)}
   50%{transform:scale(1.1);box-shadow:0 0 0 12px rgba(107,158,82,0)}
 }
+/* ══ FONDO FIJO FLORES ══ */
+#floresBg{position:fixed;inset:0;z-index:0;background:url('FondoFlores.png') top center/cover no-repeat;pointer-events:none}
 /* ══ SLIDES ══ */
-#deck{position:fixed;inset:0;overflow:hidden;touch-action:none}
+#deck{position:fixed;inset:0;overflow:hidden;touch-action:none;z-index:1}
 .slide{
   position:absolute;inset:0;display:flex;flex-direction:column;
   align-items:center;justify-content:center;
@@ -81,7 +83,15 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
 .slide.active .s2{animation:fadeUp .7s ease forwards .22s;opacity:0}
 .slide.active .s3{animation:fadeUp .7s ease forwards .36s;opacity:0}
 .slide.active .s4{animation:fadeUp .7s ease forwards .5s;opacity:0}
+.slide.active .s5{animation:fadeUp .7s ease forwards .65s;opacity:0}
+.slide.active .s6{animation:fadeUp .7s ease forwards .80s;opacity:0}
 @keyframes fadeUp{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+/* Programa del día: aparición el doble de lenta */
+#slide-3b.active .s2{animation-delay:.40s}
+#slide-3b.active .s3{animation-delay:.80s}
+#slide-3b.active .s4{animation-delay:1.20s}
+#slide-3b.active .s5{animation-delay:1.60s}
+#slide-3b.active .s6{animation-delay:2.00s}
 
 /* ── SLIDE 1: HERO ── */
 #slide-1{background:#1a1a1a url('previewP.png') center/cover no-repeat;overflow:hidden}
@@ -99,7 +109,7 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
 .hero-date span{font-size:clamp(.58rem,2.8vw,.68rem);letter-spacing:.3em;color:var(--muted);text-transform:uppercase;white-space:nowrap}
 
 /* ── SLIDE 2: COUNTDOWN ── */
-#slide-2{background:linear-gradient(160deg,#eaf4e2 0%,#F2F0EB 50%,#e8f0e0 100%)}
+#slide-2{background:transparent}
 .countdown-grid{display:flex;gap:clamp(.6rem,3vw,1.4rem);justify-content:center;margin-top:1.4rem;width:100%}
 .count-box{flex:1;max-width:88px;display:flex;flex-direction:column;align-items:center}
 .count-num{font-family:'Cormorant Garamond',serif;font-size:clamp(2rem,8vw,3.5rem);font-weight:300;color:var(--text);width:100%;aspect-ratio:1;border:1px solid var(--rose);display:flex;align-items:center;justify-content:center;position:relative;background:rgba(234,244,226,0.6)}
@@ -109,7 +119,7 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
 .count-label{font-size:clamp(.47rem,1.8vw,.57rem);letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-top:.55rem}
 
 /* ── SLIDE 3: DETAILS ── */
-#slide-3{background:linear-gradient(160deg,#eaf4e2 0%,#F2F0EB 50%,#e8f0e0 100%);justify-content:flex-start;padding-top:max(2rem,env(safe-area-inset-top))}
+#slide-3{background:transparent;justify-content:flex-start;padding-top:max(2rem,env(safe-area-inset-top))}
 .detail-list{width:100%;max-width:400px;margin-top:1.2rem;display:flex;flex-direction:column;overflow-y:auto;max-height:calc(100dvh - 140px)}
 .detail-list::-webkit-scrollbar{display:none}
 .detail-row{display:flex;align-items:center;gap:1.1rem;padding:1.2rem 1.4rem;background:rgba(255,255,255,0.6);border-bottom:1px solid var(--rose)}
@@ -121,9 +131,8 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
 .map-container{width:100%;height:190px;border:0;border-radius:4px;margin-top:.2rem;display:block}
 
 /* ── SLIDE 3b: PROGRAMA ── */
-#slide-3b{background:#F2F0EB;padding:0;justify-content:center;overflow:hidden}
-.prog-bg{position:absolute;inset:0;background:linear-gradient(160deg,#eaf4e2 0%,#F2F0EB 50%,#e8f0e0 100%)}
-.prog-bg::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 50% at 60% 20%,rgba(157,196,126,.18) 0%,transparent 70%)}
+#slide-3b{background:transparent;padding:0;justify-content:center;overflow:hidden}
+.prog-bg{display:none}
 .prog-content{position:relative;z-index:2;width:100%;max-width:480px;padding:max(2.2rem,env(safe-area-inset-top)) 1rem max(1.2rem,env(safe-area-inset-bottom));display:flex;flex-direction:column;align-items:center;height:100%;overflow-y:auto}
 .prog-content::-webkit-scrollbar{display:none}
 .prog-title{font-family:'Pinyon Script',cursive;font-size:clamp(2.4rem,11vw,3.8rem);color:var(--brown);text-align:left;width:100%;margin-bottom:1rem;font-weight:400;padding-left:.5rem;opacity:0}
@@ -143,7 +152,7 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
 .prog-time{font-family:'Jost',sans-serif;font-weight:200;font-size:clamp(.72rem,3vw,.88rem);color:var(--muted);letter-spacing:.08em;margin-top:.15rem}
 
 /* ── SLIDE 4: RSVP ── */
-#slide-4{background:linear-gradient(160deg,#eaf4e2 0%,#F2F0EB 50%,#e8f0e0 100%);justify-content:flex-start;padding-top:max(2.5rem,env(safe-area-inset-top))}
+#slide-4{background:transparent;justify-content:flex-start;padding-top:max(2.5rem,env(safe-area-inset-top))}
 .rsvp-form{width:100%;max-width:400px;display:flex;flex-direction:column;gap:.95rem;margin-top:1.2rem;max-height:calc(100dvh - 200px);overflow-y:auto;padding-bottom:1rem}
 .rsvp-form::-webkit-scrollbar{display:none}
 .ff{display:flex;flex-direction:column;gap:.32rem;text-align:left}
@@ -167,7 +176,7 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
 .rsvp-ok small{position:relative;z-index:1;display:block;margin-top:.6rem;color:rgba(255,255,255,.75);font-size:.72rem;letter-spacing:.18em;text-align:center}
 
 /* ── SLIDE FAQ: PREGUNTAS FRECUENTES ── */
-#slide-faq{background:linear-gradient(160deg,#eaf4e2 0%,#F2F0EB 50%,#e8f0e0 100%);justify-content:flex-start;padding-top:max(2rem,env(safe-area-inset-top))}
+#slide-faq{background:transparent;justify-content:flex-start;padding-top:max(2rem,env(safe-area-inset-top))}
 .faq-list{width:100%;max-width:440px;margin-top:1.2rem;display:flex;flex-direction:column;gap:.55rem;overflow-y:auto;max-height:calc(100dvh - 140px)}
 .faq-list::-webkit-scrollbar{display:none}
 .faq-item{background:rgba(58,102,40,.1);border:1px solid var(--rose);border-radius:2px;overflow:hidden}
@@ -204,6 +213,9 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
   <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
 </div>
 <div id="nav-hint"><span>Desliza</span><div class="nav-arrow"></div></div>
+
+<!-- Fondo fijo compartido para todas las diapositivas excepto el hero -->
+<div id="floresBg"></div>
 
 <div id="deck">
 
@@ -270,10 +282,10 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
     <div class="prog-bg"></div>
     <div class="prog-content">
       <h2 class="prog-title s1">Programa del día</h2>
-      <div class="prog-timeline s2">
+      <div class="prog-timeline">
         <div class="prog-line"></div>
 
-        <div class="prog-item left">
+        <div class="prog-item left s2">
           <div class="prog-text"><div class="prog-label">Ceremonia</div><div class="prog-time">19:00</div></div>
           <div class="prog-dot"></div>
           <div class="prog-icon">
@@ -285,7 +297,7 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
           </div>
         </div>
 
-        <div class="prog-item right">
+        <div class="prog-item right s3">
           <div class="prog-icon">
             <svg viewBox="0 0 80 80" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
               <path d="M22,62 L22,38 L14,18 L30,18 Z"/><path d="M58,62 L58,38 L50,18 L66,18 Z"/>
@@ -300,7 +312,7 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
           <div class="prog-text"><div class="prog-label">Cóctel &amp; sorpresa</div><div class="prog-time">19:45</div></div>
         </div>
 
-        <div class="prog-item left">
+        <div class="prog-item left s4">
           <div class="prog-text"><div class="prog-label">Banquete</div><div class="prog-time">21:30</div></div>
           <div class="prog-dot"></div>
           <div class="prog-icon">
@@ -313,7 +325,7 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
           </div>
         </div>
 
-        <div class="prog-item right">
+        <div class="prog-item right s5">
           <div class="prog-icon">
             <svg viewBox="0 0 80 80" fill="none" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
               <!-- Groom -->
@@ -340,7 +352,7 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
           <div class="prog-text"><div class="prog-label">Baile nupcial</div><div class="prog-time">23:00</div></div>
         </div>
 
-        <div class="prog-item left">
+        <div class="prog-item left s6">
           <div class="prog-text"><div class="prog-label">Fiesta &amp; barra libre</div><div class="prog-time">00:00 – 04:00</div></div>
           <div class="prog-dot"></div>
           <div class="prog-icon">
