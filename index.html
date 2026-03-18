@@ -176,6 +176,19 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
 .rsvp-ok p{position:relative;z-index:1;font-family:'Cormorant Garamond',serif;font-size:clamp(1.4rem,6vw,2rem);font-style:italic;color:#fff;line-height:1.5;text-align:center;padding:0 2rem;text-shadow:0 2px 12px rgba(0,0,0,.5)}
 .rsvp-ok small{position:relative;z-index:1;display:block;margin-top:.6rem;color:rgba(255,255,255,.75);font-size:.72rem;letter-spacing:.18em;text-align:center}
 
+/* ── SLIDE ALOJAMIENTOS ── */
+#slide-aloj{background:transparent;justify-content:flex-start;padding-top:max(2rem,env(safe-area-inset-top))}
+.aloj-grid{width:100%;max-width:480px;margin-top:1.2rem;display:grid;grid-template-columns:1fr 1fr;gap:.6rem;overflow-y:auto;max-height:calc(100dvh - 140px)}
+.aloj-grid::-webkit-scrollbar{display:none}
+.aloj-item{background:rgba(58,102,40,.1);border:1px solid var(--rose);border-radius:2px;overflow:hidden;display:flex;flex-direction:column}
+.aloj-q{padding:.7rem .8rem;cursor:pointer;display:flex;justify-content:space-between;align-items:flex-start;gap:.5rem;user-select:none;-webkit-tap-highlight-color:transparent}
+.aloj-q span{font-family:'Cormorant Garamond',serif;font-size:clamp(.78rem,3.2vw,.92rem);color:var(--brown);font-weight:600;line-height:1.3}
+.aloj-icon{width:14px;height:14px;min-width:14px;fill:var(--gold);transition:transform .3s;margin-top:2px}
+.aloj-item.open .aloj-icon{transform:rotate(45deg)}
+.aloj-a{max-height:0;overflow:hidden;transition:max-height .7s cubic-bezier(.4,0,.2,1)}
+.aloj-a-inner{margin:.2rem .5rem .5rem;padding:.6rem .7rem;background:#f4faf0;border-left:2px solid var(--rose);font-size:.75rem;line-height:1.65;color:var(--muted)}
+.aloj-a a{color:var(--gold);text-decoration:none;word-break:break-word}
+.aloj-item.open .aloj-a{max-height:400px}
 /* ── SLIDE FAQ: PREGUNTAS FRECUENTES ── */
 #slide-faq{background:transparent;justify-content:flex-start;padding-top:max(2rem,env(safe-area-inset-top))}
 .faq-list{width:100%;max-width:440px;margin-top:1.2rem;display:flex;flex-direction:column;gap:.55rem;overflow-y:auto;max-height:calc(100dvh - 140px)}
@@ -211,7 +224,7 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
 <!-- ══ SLIDES ══ -->
 <div id="progress">
   <div class="dot active"></div><div class="dot"></div>
-  <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+  <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
 </div>
 <div id="nav-hint"><span>Desliza</span><div class="nav-arrow"></div></div>
 
@@ -370,6 +383,47 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
         </div>
 
       </div>
+    </div>
+  </div>
+
+  <!-- SLIDE ALOJAMIENTOS -->
+  <div class="slide" id="slide-aloj">
+    <span class="eyebrow s1">Dónde descansar</span>
+    <h2 class="slide-title s2">Alojamientos</h2>
+    <div class="aloj-grid s3">
+
+      <div class="aloj-item">
+        <div class="aloj-q">
+          <span>Hotel AC Santa Ana</span>
+          <svg class="aloj-icon" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+        </div>
+        <div class="aloj-a"><div class="aloj-a-inner">Es el propio hotel donde se va a realizar el evento. Todos los invitados que quieran reservar una habitación tendrán un 10% de descuento ese día.<br><br><a href="https://www.marriott.com/en-us/hotels/vllan-ac-hotel-palacio-de-santa-ana/overview/" target="_blank">Página web →</a></div></div>
+      </div>
+
+      <div class="aloj-item">
+        <div class="aloj-q">
+          <span>Hostal NANA B&amp;B</span>
+          <svg class="aloj-icon" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+        </div>
+        <div class="aloj-a"><div class="aloj-a-inner">Es la segunda opción más cercana al lugar del evento.<br><br><a href="https://www.hostalnana.com/" target="_blank">Página web →</a></div></div>
+      </div>
+
+      <div class="aloj-item">
+        <div class="aloj-q">
+          <span>Hotel La Vega</span>
+          <svg class="aloj-icon" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+        </div>
+        <div class="aloj-a"><div class="aloj-a-inner"><a href="https://www.tripadvisor.es/Hotel_Review-g187495-d249309-Reviews-Hotel_La_Vega-Valladolid_Province_of_Valladolid_Castile_and_Leon.html" target="_blank">Página web →</a></div></div>
+      </div>
+
+      <div class="aloj-item">
+        <div class="aloj-q">
+          <span>Hotel El Jardín de la Abadía</span>
+          <svg class="aloj-icon" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+        </div>
+        <div class="aloj-a"><div class="aloj-a-inner"><a href="https://www.jardindelaabadia.com/" target="_blank">Página web →</a></div></div>
+      </div>
+
     </div>
   </div>
 
@@ -639,6 +693,16 @@ document.querySelectorAll('.faq-q').forEach(function(q) {
     var item = q.closest('.faq-item');
     var wasOpen = item.classList.contains('open');
     document.querySelectorAll('.faq-item.open').forEach(function(x) { x.classList.remove('open'); });
+    if (!wasOpen) item.classList.add('open');
+  });
+});
+
+// ══ ALOJAMIENTOS ACCORDION ══
+document.querySelectorAll('.aloj-q').forEach(function(q) {
+  q.addEventListener('click', function() {
+    var item = q.closest('.aloj-item');
+    var wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.aloj-item.open').forEach(function(x) { x.classList.remove('open'); });
     if (!wasOpen) item.classList.add('open');
   });
 });
