@@ -54,8 +54,13 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
   50%{transform:scale(1.1);box-shadow:0 0 0 12px rgba(107,158,82,0)}
 }
 /* ══ FONDO FIJO FLORES ══ */
-#floresBg{position:fixed;inset:0;z-index:0;background:url('FondoFlores.png') top center/cover no-repeat;pointer-events:none}
-@media (pointer:fine){#floresBg{background-image:url('FondoFloresP.png')}}
+#floresBg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+#floresBg video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+/* En ordenador: imagen estática, ocultar vídeo */
+@media (pointer:fine){
+  #floresBg{background:url('FondoFloresP.png') top center/cover no-repeat}
+  #floresBg video{display:none}
+}
 /* ══ SLIDES ══ */
 #deck{position:fixed;inset:0;overflow:hidden;touch-action:none;z-index:1}
 .slide{
@@ -178,7 +183,7 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
 
 /* ── SLIDE ALOJAMIENTOS ── */
 #slide-aloj{background:transparent;justify-content:flex-start;padding-top:max(2rem,env(safe-area-inset-top))}
-.aloj-grid{width:100%;max-width:480px;margin-top:1.2rem;display:grid;grid-template-columns:1fr 1fr;gap:.6rem;overflow-y:auto;max-height:calc(100dvh - 140px)}
+.aloj-grid{width:100%;max-width:480px;margin-top:auto;margin-bottom:auto;margin-left:auto;margin-right:auto;display:grid;grid-template-columns:1fr 1fr;gap:.6rem;overflow-y:auto;max-height:calc(100dvh - 140px)}
 .aloj-grid::-webkit-scrollbar{display:none}
 .aloj-item{background:rgba(58,102,40,.1);border:1px solid var(--rose);border-radius:2px;overflow:hidden;display:flex;flex-direction:column}
 .aloj-q{padding:.7rem .8rem;cursor:pointer;display:flex;justify-content:space-between;align-items:flex-start;gap:.5rem;user-select:none;-webkit-tap-highlight-color:transparent}
@@ -229,7 +234,9 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
 <div id="nav-hint"><span>Desliza</span><div class="nav-arrow"></div></div>
 
 <!-- Fondo fijo compartido para todas las diapositivas excepto el hero -->
-<div id="floresBg"></div>
+<div id="floresBg">
+  <video autoplay muted loop playsinline preload="auto" src="FondoMov.mp4"></video>
+</div>
 
 <div id="deck">
 
@@ -405,15 +412,15 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
           <span>Hostal NANA B&amp;B</span>
           <svg class="aloj-icon" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
         </div>
-        <div class="aloj-a"><div class="aloj-a-inner">Es la segunda opción más cercana al lugar del evento.<br><br><a href="https://www.hostalnana.com/" target="_blank">Página web →</a></div></div>
+        <div class="aloj-a"><div class="aloj-a-inner">Se encuentra a 9 minutos andando.<br><br><a href="https://www.hostalnana.com/" target="_blank">Página web →</a></div></div>
       </div>
 
       <div class="aloj-item">
         <div class="aloj-q">
-          <span>Hotel La Vega</span>
+          <span>Villa Augusta Spa &amp; Garden</span>
           <svg class="aloj-icon" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
         </div>
-        <div class="aloj-a"><div class="aloj-a-inner"><a href="https://www.tripadvisor.es/Hotel_Review-g187495-d249309-Reviews-Hotel_La_Vega-Valladolid_Province_of_Valladolid_Castile_and_Leon.html" target="_blank">Página web →</a></div></div>
+        <div class="aloj-a"><div class="aloj-a-inner">Se encuentra en La Vega. Desde el lugar de celebración queda a unos 33 minutos andando y 6 en taxi.<br><br><a href="https://www.tripadvisor.es/Hotel_Review-g187495-d249309-Reviews-Hotel_La_Vega-Valladolid_Province_of_Valladolid_Castile_and_Leon.html" target="_blank">Página web →</a></div></div>
       </div>
 
       <div class="aloj-item">
@@ -421,7 +428,7 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
           <span>Hotel El Jardín de la Abadía</span>
           <svg class="aloj-icon" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
         </div>
-        <div class="aloj-a"><div class="aloj-a-inner"><a href="https://www.jardindelaabadia.com/" target="_blank">Página web →</a></div></div>
+        <div class="aloj-a"><div class="aloj-a-inner">Se encuentra en Arroyo de la Encomienda pueblo. Desde el lugar de celebración queda a unos 50 minutos andando y 9 en taxi.<br><br><a href="https://www.jardindelaabadia.com/" target="_blank">Página web →</a></div></div>
       </div>
 
     </div>
@@ -706,6 +713,22 @@ document.querySelectorAll('.aloj-q').forEach(function(q) {
     if (!wasOpen) item.classList.add('open');
   });
 });
+
+// ══ PAUSA MÚSICA EN SEGUNDO PLANO ══
+(function() {
+  var music = document.getElementById('bgMusic');
+  if (!music) return;
+  document.addEventListener('visibilitychange', function() {
+    if (document.hidden) {
+      music.pause();
+    } else {
+      // Solo reanuda si ya había empezado a sonar
+      if (music.currentTime > 0 && !music.ended) {
+        music.play().catch(function() {});
+      }
+    }
+  });
+})();
 
 // ══ HELPERS ══
 function fadeAudio(el, from, to, ms) {
