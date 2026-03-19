@@ -55,12 +55,11 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
 }
 /* ══ FONDO FIJO FLORES ══ */
 #floresBg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
-#bgVid1,#bgVid2{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:opacity 1.2s ease}
-#bgVid2{opacity:0}
-/* En ordenador: imagen estática, ocultar vídeos */
+#bgVid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+/* En ordenador: imagen estática, ocultar vídeo */
 @media (pointer:fine){
   #floresBg{background:url('FondoFloresP.png') top center/cover no-repeat}
-  #bgVid1,#bgVid2{display:none}
+  #bgVid{display:none}
 }
 /* ══ SLIDES ══ */
 #deck{position:fixed;inset:0;overflow:hidden;touch-action:none;z-index:1}
@@ -238,8 +237,7 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
 
 <!-- Fondo fijo compartido para todas las diapositivas excepto el hero -->
 <div id="floresBg">
-  <video id="bgVid1" muted playsinline preload="none"></video>
-  <video id="bgVid2" muted playsinline preload="none"></video>
+  <video id="bgVid" muted playsinline preload="none"></video>
 </div>
 
 <div id="deck">
@@ -597,8 +595,10 @@ var FRAMES = [
   function startVideo() {
     if (played) return;
     played = true;
+    hint.style.animation = 'none';
     hint.style.transition = 'opacity .3s';
     hint.style.opacity = '0';
+    setTimeout(function() { hint.style.display = 'none'; }, 350);
     video.muted = false;
     video.currentTime = 0;
     video.play().catch(function() { afterVideo(); });
@@ -724,61 +724,70 @@ document.querySelectorAll('.aloj-q').forEach(function(q) {
   });
 });
 
-// ══ SEAMLESS BG VIDEO CROSSFADE (solo móvil) ══
+// ══ BG VIDEO PING-PONG / MIRROR LOOP (solo móvil) ══
 (function() {
   var isMob = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ||
               (window.matchMedia && window.matchMedia('(pointer:coarse)').matches);
   if (!isMob) return;
 
-  var FADE = 1.2;   // duración del crossfade en segundos
-  var AHEAD = 0.4;  // segundos antes del final para iniciar el crossfade
-  var SRC   = 'FondoMov.mp4';
+  var vid = document.getElementById('bgVid');
+  if (!vid) return;
 
-  var v1 = document.getElementById('bgVid1');
-  var v2 = document.getElementById('bgVid2');
-  if (!v1 || !v2) return;
+  vid.src = 'FondoMov.mp4';
 
-  // Asignar src solo en móvil (evita descarga en PC)
-  v1.src = SRC;
-  v2.src = SRC;
+  var reverse   = false;  // dirección actual
+  var rafId     = null;   // requestAnimationFrame id durante la reversa
+  var lastStamp = null;   // timestamp del frame anterior
 
-  var active   = v1;
-  var standby  = v2;
-  var crossing = false;
+  // ── Reversa frame a frame con rAF ──────────────────────────────────────
+  function stepBack(ts) {
+    if (!reverse) return;
+    if (lastStamp !== null) {
+      var delta = (ts - lastStamp) / 1000; // segundos transcurridos
+      vid.currentTime = Math.max(0, vid.currentTime - delta);
+    }
+    lastStamp = ts;
 
-  function swap() {
-    if (crossing) return;
-    crossing = true;
-    standby.currentTime = 0;
-    standby.play().catch(function(){});
-    standby.style.opacity = '1';
-    active.style.opacity  = '0';
-    var prevActive = active;
-    setTimeout(function() {
-      prevActive.pause();
-      var tmp = active; active = standby; standby = tmp;
-      crossing = false;
-    }, (FADE + 0.15) * 1000);
+    if (vid.currentTime <= 0) {
+      // Llegamos al inicio → pasar a marcha adelante
+      reverse   = false;
+      lastStamp = null;
+      vid.currentTime = 0;
+      vid.play().catch(function(){});
+    } else {
+      rafId = requestAnimationFrame(stepBack);
+    }
   }
 
-  function checkTime(vid) {
-    if (active !== vid || crossing || !vid.duration) return;
-    if (vid.currentTime >= vid.duration - FADE - AHEAD) swap();
-  }
+  // ── Al llegar al final → activar reversa ───────────────────────────────
+  vid.addEventListener('ended', function() {
+    vid.pause();
+    reverse   = true;
+    lastStamp = null;
+    rafId     = requestAnimationFrame(stepBack);
+  });
 
-  v1.addEventListener('timeupdate', function() { checkTime(v1); });
-  v2.addEventListener('timeupdate', function() { checkTime(v2); });
-
-  // Arrancar: los vídeos muted pueden autoplay en móvil sin gesto
-  v1.load();
-  v1.play().catch(function() {
+  // ── Arranque (vídeo muted puede autoplay en móvil sin gesto) ───────────
+  vid.load();
+  vid.play().catch(function() {
     var done = false;
     function tryOnce() {
       if (done) return; done = true;
-      v1.play().catch(function(){});
+      vid.play().catch(function(){});
     }
     document.addEventListener('touchend', tryOnce, {once: true});
     document.addEventListener('click',    tryOnce, {once: true});
+  });
+
+  // ── Pausa/reanuda la reversa junto con visibilitychange ────────────────
+  document.addEventListener('visibilitychange', function() {
+    if (document.hidden && reverse && rafId) {
+      cancelAnimationFrame(rafId);
+      rafId = null;
+    } else if (!document.hidden && reverse) {
+      lastStamp = null;
+      rafId = requestAnimationFrame(stepBack);
+    }
   });
 })();
 
