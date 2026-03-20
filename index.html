@@ -201,7 +201,7 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
 .rsvp-ok small{position:relative;z-index:1;display:block;margin-top:.6rem;color:rgba(255,255,255,.75);font-size:.72rem;letter-spacing:.18em;text-align:center}
 
 /* ── SLIDE ALOJAMIENTOS ── */
-#slide-aloj{background:transparent;justify-content:flex-start;padding-top:max(2rem,env(safe-area-inset-top))}
+#slide-aloj{background:transparent}
 .aloj-grid{width:100%;max-width:480px;margin-top:1rem;margin-left:auto;margin-right:auto;display:grid;grid-template-columns:1fr 1fr;gap:.6rem;overflow-y:auto;max-height:calc(100dvh - 200px)}
 .aloj-grid::-webkit-scrollbar{display:none}
 .aloj-item{background:rgba(58,102,40,.1);border:1px solid var(--rose);border-radius:2px;overflow:hidden;display:flex;flex-direction:column}
@@ -226,6 +226,30 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
 .faq-a-inner{margin:.3rem .7rem .7rem;padding:.75rem 1rem;background:#f4faf0;border-left:2px solid var(--rose);font-size:.82rem;line-height:1.7;color:var(--muted)}
 .faq-a a{color:var(--gold);text-decoration:none}
 .faq-item.open .faq-a{max-height:300px}
+
+/* ── SLIDE REGALOS ── */
+#slide-regalos{background:transparent}
+.regalo-intro{font-family:'Cormorant Garamond',serif;font-size:clamp(.9rem,3.8vw,1.05rem);color:var(--brown);text-align:center;line-height:1.6;font-style:italic;margin-bottom:.8rem}
+.regalo-list{width:100%;max-width:440px;display:flex;flex-direction:column;gap:.55rem;overflow-y:auto;max-height:calc(100dvh - 200px)}
+.regalo-list::-webkit-scrollbar{display:none}
+/* outer item */
+.regalo-outer{background:rgba(58,102,40,.1);border:1px solid var(--rose);border-radius:2px;overflow:hidden}
+.regalo-outer-q{padding:.85rem 1.1rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:.8rem;user-select:none;-webkit-tap-highlight-color:transparent}
+.regalo-outer-q span{font-family:'Cormorant Garamond',serif;font-size:clamp(.88rem,3.8vw,1.05rem);color:var(--brown);font-weight:400;line-height:1.3}
+.regalo-outer-icon{width:16px;height:16px;min-width:16px;fill:var(--gold);transition:transform .3s}
+.regalo-outer.open .regalo-outer-icon{transform:rotate(45deg)}
+.regalo-outer-body{max-height:0;overflow:hidden;transition:max-height .7s cubic-bezier(.4,0,.2,1)}
+.regalo-outer.open .regalo-outer-body{max-height:500px}
+/* sub items */
+.regalo-sub-list{margin:.3rem .7rem .7rem;display:flex;flex-direction:column;gap:.4rem}
+.regalo-sub{background:#f4faf0;border-left:2px solid var(--rose);border-radius:1px;overflow:hidden}
+.regalo-sub-q{padding:.6rem .8rem;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:.6rem;user-select:none;-webkit-tap-highlight-color:transparent}
+.regalo-sub-q span{font-family:'Cormorant Garamond',serif;font-size:clamp(.8rem,3.2vw,.92rem);color:var(--brown);font-weight:600;line-height:1.3}
+.regalo-sub-icon{width:13px;height:13px;min-width:13px;fill:var(--gold);transition:transform .3s}
+.regalo-sub.open .regalo-sub-icon{transform:rotate(45deg)}
+.regalo-sub-a{max-height:0;overflow:hidden;transition:max-height .5s cubic-bezier(.4,0,.2,1)}
+.regalo-sub-a-inner{padding:.5rem .8rem .7rem;font-size:.78rem;line-height:1.65;color:var(--muted)}
+.regalo-sub.open .regalo-sub-a{max-height:200px}
 </style>
 </head>
 <body>
@@ -248,7 +272,7 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
 <!-- ══ SLIDES ══ -->
 <div id="progress">
   <div class="dot active"></div><div class="dot"></div>
-  <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+  <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
 </div>
 <div id="nav-hint"><span>Desliza</span><div class="nav-arrow"></div></div>
 
@@ -304,6 +328,7 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
 
   <!-- SLIDE 3: DETAILS -->
   <div class="slide" id="slide-3">
+    <div class="glass-wrap">
     <span class="eyebrow s1">Todo lo que necesitas saber</span>
     <h2 class="slide-title s2">Los detalles del día</h2>
     <div class="detail-list s3">
@@ -322,6 +347,7 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
         </div>
         <div id="weddingMap" class="map-container" style="z-index:1"></div>
       </div>
+    </div>
     </div>
   </div>
 
@@ -460,6 +486,46 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
       </div>
 
     </div>
+    </div>
+  </div>
+
+  <!-- SLIDE REGALOS -->
+  <div class="slide" id="slide-regalos">
+    <div class="glass-wrap">
+      <span class="eyebrow s1">Con todo nuestro cariño</span>
+      <h2 class="slide-title s2">Regalos</h2>
+      <p class="regalo-intro s3">Vuestra presencia es lo más importante para nosotros. Si aun así queréis hacernos un regalo, aquí os dejamos algunas opciones.</p>
+      <div class="regalo-list s4">
+
+        <div class="regalo-outer">
+          <div class="regalo-outer-q">
+            <span>Aportación</span>
+            <svg class="regalo-outer-icon" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+          </div>
+          <div class="regalo-outer-body">
+            <div class="regalo-sub-list">
+
+              <div class="regalo-sub">
+                <div class="regalo-sub-q">
+                  <span>Bizum</span>
+                  <svg class="regalo-sub-icon" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                </div>
+                <div class="regalo-sub-a"><div class="regalo-sub-a-inner">Puedes enviarnos un Bizum al número:<br><strong>XXX XXX XXX</strong></div></div>
+              </div>
+
+              <div class="regalo-sub">
+                <div class="regalo-sub-q">
+                  <span>Transferencia</span>
+                  <svg class="regalo-sub-icon" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                </div>
+                <div class="regalo-sub-a"><div class="regalo-sub-a-inner">IBAN: <strong>ES00 0000 0000 0000 0000 0000</strong><br>Titular: Sandra y Samuel</div></div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
 
@@ -745,6 +811,24 @@ document.querySelectorAll('.aloj-q').forEach(function(q) {
     var item = q.closest('.aloj-item');
     var wasOpen = item.classList.contains('open');
     document.querySelectorAll('.aloj-item.open').forEach(function(x) { x.classList.remove('open'); });
+    if (!wasOpen) item.classList.add('open');
+  });
+});
+
+// ══ REGALOS ACCORDION ══
+document.querySelectorAll('.regalo-outer-q').forEach(function(q) {
+  q.addEventListener('click', function() {
+    var item = q.closest('.regalo-outer');
+    var wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.regalo-outer.open').forEach(function(x) { x.classList.remove('open'); });
+    if (!wasOpen) item.classList.add('open');
+  });
+});
+document.querySelectorAll('.regalo-sub-q').forEach(function(q) {
+  q.addEventListener('click', function() {
+    var item = q.closest('.regalo-sub');
+    var wasOpen = item.classList.contains('open');
+    item.closest('.regalo-sub-list').querySelectorAll('.regalo-sub.open').forEach(function(x) { x.classList.remove('open'); });
     if (!wasOpen) item.classList.add('open');
   });
 });
