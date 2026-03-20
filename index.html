@@ -240,7 +240,7 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
 
 <!-- Fondo fijo compartido para todas las diapositivas excepto el hero -->
 <div id="floresBg">
-  <video id="bgVid" muted playsinline preload="none"></video>
+  <video id="bgVid" autoplay muted loop playsinline preload="none" poster="previewT.png"></video>
 </div>
 
 <div id="deck">
@@ -727,7 +727,7 @@ document.querySelectorAll('.aloj-q').forEach(function(q) {
   });
 });
 
-// ══ BG VIDEO PING-PONG / MIRROR LOOP (solo móvil) ══
+// ══ BG VIDEO MÓVIL ══
 (function() {
   var isMob = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent) ||
               (window.matchMedia && window.matchMedia('(pointer:coarse)').matches);
@@ -736,43 +736,11 @@ document.querySelectorAll('.aloj-q').forEach(function(q) {
   var vid = document.getElementById('bgVid');
   if (!vid) return;
 
-  vid.src = 'FondoMov.mp4';
-
-  var reverse   = false;  // dirección actual
-  var rafId     = null;   // requestAnimationFrame id durante la reversa
-  var lastStamp = null;   // timestamp del frame anterior
-
-  // ── Reversa frame a frame con rAF ──────────────────────────────────────
-  function stepBack(ts) {
-    if (!reverse) return;
-    if (lastStamp !== null) {
-      var delta = (ts - lastStamp) / 1000; // segundos transcurridos
-      vid.currentTime = Math.max(0, vid.currentTime - delta);
-    }
-    lastStamp = ts;
-
-    if (vid.currentTime <= 0) {
-      // Llegamos al inicio → pasar a marcha adelante
-      reverse   = false;
-      lastStamp = null;
-      vid.currentTime = 0;
-      vid.play().catch(function(){});
-    } else {
-      rafId = requestAnimationFrame(stepBack);
-    }
-  }
-
-  // ── Al llegar al final → activar reversa ───────────────────────────────
-  vid.addEventListener('ended', function() {
-    vid.pause();
-    reverse   = true;
-    lastStamp = null;
-    rafId     = requestAnimationFrame(stepBack);
-  });
-
-  // ── Arranque (vídeo muted puede autoplay en móvil sin gesto) ───────────
+  // Asignar src solo en móvil — evita descarga en escritorio
+  vid.src = 'finalWeb.mp4';
   vid.load();
   vid.play().catch(function() {
+    // Fallback: arrancar en la primera interacción si autoplay es bloqueado
     var done = false;
     function tryOnce() {
       if (done) return; done = true;
@@ -780,17 +748,6 @@ document.querySelectorAll('.aloj-q').forEach(function(q) {
     }
     document.addEventListener('touchend', tryOnce, {once: true});
     document.addEventListener('click',    tryOnce, {once: true});
-  });
-
-  // ── Pausa/reanuda la reversa junto con visibilitychange ────────────────
-  document.addEventListener('visibilitychange', function() {
-    if (document.hidden && reverse && rafId) {
-      cancelAnimationFrame(rafId);
-      rafId = null;
-    } else if (!document.hidden && reverse) {
-      lastStamp = null;
-      rafId = requestAnimationFrame(stepBack);
-    }
   });
 })();
 
