@@ -103,9 +103,7 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
 #slide-3b.active .s6{animation-delay:2.00s}
 
 /* ── SLIDE 1: HERO ── */
-#slide-1{background:#1a1a1a url('previewP.png') center/cover no-repeat;overflow:hidden;position:relative}
-#slide-1::before{content:'';position:absolute;inset:0;background:rgba(0,0,0,0.3);z-index:1;pointer-events:none}
-#slide-1 > *{position:relative;z-index:2}
+#slide-1{background:#1a1a1a url('previewP.png') center/cover no-repeat;overflow:hidden}
 @media (pointer:coarse),(max-width:768px){#slide-1{background-image:url('previewT.png')}}
 
 
@@ -261,7 +259,7 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
     <!-- Script síncrono: ajusta imagen del heroPoster al mismo poster que el vídeo -->
     <script>(function(){var p=document.getElementById('heroPoster');if(p&&/iPhone|iPad|iPod|Android/i.test(navigator.userAgent))p.style.backgroundImage="url('previewT.png')";}());</script>
     <!-- Capa oscura para contraste -->
-    <div style="position:absolute;inset:0;background:rgba(0,0,0,0.25);z-index:3;pointer-events:none"></div>
+    <div style="position:absolute;inset:0;background:rgba(0,0,0,0.35);z-index:3;pointer-events:none"></div>
     <!-- Contenido encima del vídeo -->
     <div class="hero-line" style="position:relative;z-index:4"></div>
     <p class="hero-tag" style="position:relative;z-index:4;color:rgba(255,255,255,0.85)">Os invitamos a nuestra boda</p>
