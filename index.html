@@ -59,6 +59,8 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
 /* ══ FONDO FIJO FLORES ══ */
 #floresBg{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
 #bgVid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+/* Overlay oscuro encima del vídeo/imagen de fondo, debajo del contenido */
+#floresBg::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,0.35);z-index:1;pointer-events:none}
 /* En ordenador: imagen estática, ocultar vídeo */
 @media (pointer:fine){
   #floresBg{background:url('FondoFloresP.png') top center/cover no-repeat}
