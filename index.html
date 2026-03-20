@@ -103,8 +103,7 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
 #slide-3b.active .s6{animation-delay:2.00s}
 
 /* ── SLIDE 1: HERO ── */
-#slide-1{background:#1a1a1a url('previewP.png') center/cover no-repeat;overflow:hidden}
-@media (pointer:coarse),(max-width:768px){#slide-1{background-image:url('previewT.png')}}
+#slide-1{background:#000;overflow:hidden}
 
 
 
@@ -286,16 +285,10 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
   <!-- SLIDE 1: HERO -->
   <div class="slide active" id="slide-1">
     <!-- Video de fondo -->
-    <video id="heroBgVideo" autoplay muted playsinline loop preload="auto" poster="previewP.png"
+    <video id="heroBgVideo" muted playsinline loop preload="none"
       style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;pointer-events:none;">
       <source src="pedida.mp4" type="video/mp4">
     </video>
-    <!-- Script síncrono: cambia poster ANTES del primer paint según dispositivo -->
-    <script>(function(){var v=document.getElementById('heroBgVideo');if(v&&/iPhone|iPad|iPod|Android/i.test(navigator.userAgent))v.poster='previewT.png';}());</script>
-    <!-- Poster de refuerzo: imagen por encima del vídeo hasta que arranque, sin depender de eventos -->
-    <div id="heroPoster" style="position:absolute;inset:0;z-index:2;background:url('previewP.png') center/cover no-repeat;pointer-events:none;transition:opacity .8s"></div>
-    <!-- Script síncrono: ajusta imagen del heroPoster al mismo poster que el vídeo -->
-    <script>(function(){var p=document.getElementById('heroPoster');if(p&&/iPhone|iPad|iPod|Android/i.test(navigator.userAgent))p.style.backgroundImage="url('previewT.png')";}());</script>
     <!-- Capa oscura para contraste -->
     <div style="position:absolute;inset:0;background:rgba(0,0,0,0.35);z-index:3;pointer-events:none"></div>
     <!-- Contenido encima del vídeo -->
@@ -670,6 +663,8 @@ var FRAMES = [
       document.getElementById('nav-hint').classList.add('visible');
       var m = document.getElementById('bgMusic');
       if (m) { m.volume=0; m.play().then(function(){ fadeAudio(m,0,0.5,2500); }).catch(function(){}); }
+      var hv = document.getElementById('heroBgVideo');
+      if (hv) hv.play().catch(function(){});
     }, 650);
   }
 
@@ -711,6 +706,11 @@ function goTo(idx) {
   dots[idx].classList.add('active');
   cur = idx;
   navHint.classList.toggle('visible', cur < slides.length - 1);
+  // Arrancar vídeo hero al llegar a slide-1
+  if (slides[idx].id === 'slide-1') {
+    var hv = document.getElementById('heroBgVideo');
+    if (hv && hv.paused) hv.play().catch(function(){});
+  }
   // Invalidate map if navigating to slide-3
   if (slides[idx].id === 'slide-3' && window._mapInstance) {
     setTimeout(function() { window._mapInstance.invalidateSize(); }, 150);
@@ -900,27 +900,5 @@ function fadeAudio(el, from, to, ms) {
 </script>
 
 
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  var video  = document.getElementById("heroBgVideo");
-  var poster = document.getElementById("heroPoster");
-  if (!video) return;
-
-  // Oculta heroPoster en cuanto el vídeo está reproduciendo
-  function hidePoster() {
-    if (poster) poster.style.opacity = '0';
-  }
-  video.addEventListener('playing', hidePoster, { once: true });
-
-  // Intento de reproducción (Safari iOS necesita muted + play explícito)
-  video.muted = true;
-  video.play().catch(function() {
-    // Sin gesto del usuario (iOS): espera primer toque
-    document.addEventListener("touchstart", function() {
-      video.play().catch(function(){});
-    }, { once: true });
-  });
-});
-</script>
 </body>
 </html>
