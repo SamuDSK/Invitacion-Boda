@@ -103,7 +103,9 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
 #slide-3b.active .s6{animation-delay:2.00s}
 
 /* ── SLIDE 1: HERO ── */
-#slide-1{background:#1a1a1a url('previewP.png') center/cover no-repeat;overflow:hidden}
+#slide-1{background:#1a1a1a url('previewP.png') center/cover no-repeat;overflow:hidden;position:relative}
+#slide-1::before{content:'';position:absolute;inset:0;background:rgba(0,0,0,0.3);z-index:1;pointer-events:none}
+#slide-1 > *{position:relative;z-index:2}
 @media (pointer:coarse),(max-width:768px){#slide-1{background-image:url('previewT.png')}}
 
 
