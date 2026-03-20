@@ -117,6 +117,20 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
 .hero-date .rule{flex:1;max-width:45px;height:1px;background:var(--gold);opacity:.5}
 .hero-date span{font-size:clamp(.58rem,2.8vw,.68rem);letter-spacing:.3em;color:var(--muted);text-transform:uppercase;white-space:nowrap}
 
+/* ── GLASS WRAP (efecto cristal difuminado) ── */
+.glass-wrap{
+  background:rgba(255,255,255,0.18);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  border-radius:24px;
+  padding:1.5rem 1.5rem 1.8rem;
+  width:100%;
+  max-width:480px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:.5rem;
+}
 /* ── SLIDE 2: COUNTDOWN ── */
 #slide-2{background:transparent}
 .countdown-grid{display:flex;gap:clamp(.6rem,3vw,1.4rem);justify-content:center;margin-top:1.4rem;width:100%}
@@ -188,7 +202,7 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
 
 /* ── SLIDE ALOJAMIENTOS ── */
 #slide-aloj{background:transparent;justify-content:flex-start;padding-top:max(2rem,env(safe-area-inset-top))}
-.aloj-grid{width:100%;max-width:480px;margin-top:auto;margin-bottom:auto;margin-left:auto;margin-right:auto;display:grid;grid-template-columns:1fr 1fr;gap:.6rem;overflow-y:auto;max-height:calc(100dvh - 140px)}
+.aloj-grid{width:100%;max-width:480px;margin-top:1rem;margin-left:auto;margin-right:auto;display:grid;grid-template-columns:1fr 1fr;gap:.6rem;overflow-y:auto;max-height:calc(100dvh - 200px)}
 .aloj-grid::-webkit-scrollbar{display:none}
 .aloj-item{background:rgba(58,102,40,.1);border:1px solid var(--rose);border-radius:2px;overflow:hidden;display:flex;flex-direction:column}
 .aloj-q{padding:.7rem .8rem;cursor:pointer;display:flex;justify-content:space-between;align-items:flex-start;gap:.5rem;user-select:none;-webkit-tap-highlight-color:transparent}
@@ -269,6 +283,7 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
 
   <!-- SLIDE 2: COUNTDOWN -->
   <div class="slide" id="slide-2">
+    <div class="glass-wrap">
     <span class="eyebrow s1">Falta poco para el gran día</span>
     <h2 class="slide-title s2">Cuenta atrás</h2>
     <div class="divider s3"><svg viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg></div>
@@ -284,6 +299,7 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
       <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M19 4h-1V2h-2v2H8V2H6v2H5C3.89 4 3 4.9 3 6v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 16H5V9h14v11zM7 11h5v5H7z"/></svg>
       Añadir al calendario
     </a>
+    </div>
   </div>
 
   <!-- SLIDE 3: DETAILS -->
@@ -312,7 +328,7 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
   <!-- SLIDE 3b: PROGRAMA -->
   <div class="slide" id="slide-3b">
     <div class="prog-bg"></div>
-    <div class="prog-content">
+    <div class="prog-content glass-wrap">
       <h2 class="prog-title s1">Programa del día</h2>
       <div class="prog-timeline">
         <div class="prog-line"></div>
@@ -406,6 +422,7 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
 
   <!-- SLIDE ALOJAMIENTOS -->
   <div class="slide" id="slide-aloj">
+    <div class="glass-wrap">
     <span class="eyebrow s1">Dónde descansar</span>
     <h2 class="slide-title s2">Alojamientos</h2>
     <div class="aloj-grid s3">
@@ -443,10 +460,12 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
       </div>
 
     </div>
+    </div>
   </div>
 
   <!-- SLIDE FAQ: PREGUNTAS FRECUENTES -->
   <div class="slide" id="slide-faq">
+    <div class="glass-wrap">
     <span class="eyebrow s1">Resolvemos tus dudas</span>
     <h2 class="slide-title s2">Preguntas frecuentes</h2>
     <div class="faq-list s3">
@@ -492,10 +511,12 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
       </div>
 
     </div>
+    </div>
   </div>
 
   <!-- SLIDE 4: RSVP -->
   <div class="slide" id="slide-4">
+    <div class="glass-wrap">
     <span class="eyebrow s1">Confirmación de asistencia</span>
     <h2 class="slide-title s2">¿Contamos contigo?</h2>
     <form class="rsvp-form s3" id="rsvpForm" onsubmit="submitRSVP(event)">
@@ -512,6 +533,7 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
     <div class="rsvp-ok" id="rsvpOk">
       <p>¡Gracias! Tu confirmación ha sido registrada.</p>
       <small>Sandra &amp; Samuel · 19.06.2027</small>
+    </div>
     </div>
   </div>
 
