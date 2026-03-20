@@ -663,11 +663,15 @@ var FRAMES = [
       document.getElementById('nav-hint').classList.add('visible');
       var m = document.getElementById('bgMusic');
       if (m) { m.volume=0; m.play().then(function(){ fadeAudio(m,0,0.5,2500); }).catch(function(){}); }
-      var hv = document.getElementById('heroBgVideo');
-      if (hv) hv.play().catch(function(){});
     }, 650);
   }
 
+  video.addEventListener('timeupdate', function() {
+    if (video.duration && video.currentTime >= video.duration - 1) {
+      var hv = document.getElementById('heroBgVideo');
+      if (hv && hv.paused) hv.play().catch(function(){});
+    }
+  });
   video.addEventListener('ended', afterVideo);
 
   function startVideo() {
