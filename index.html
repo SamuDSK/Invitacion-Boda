@@ -2,9 +2,6 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<!-- CACHE BUSTER — eliminar cuando la web esté terminada -->
-<script>if(!window.location.search.includes('v=')){window.location.search='?v='+Date.now();}</script>
-<!-- FIN CACHE BUSTER -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Sandra & Samuel · 19 · VI · MMXXVII</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -111,7 +108,7 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
 @keyframes lineGrow{to{height:50px}}
 .hero-tag{font-size:clamp(.55rem,2.5vw,.65rem);letter-spacing:.45em;text-transform:uppercase;color:rgba(255,255,255,.8);margin-bottom:1.4rem;text-align:center;opacity:0;animation:fadeUp .9s ease forwards .6s}
 .hero-names{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(4rem,20vw,7.5rem);color:#fff;line-height:.95;text-align:center;position:relative;z-index:2;opacity:0;animation:fadeUp 1s ease forwards .9s}
-.hero-names .amp{font-family:'Playfair Display',serif;font-style:normal;color:var(--gold);font-size:.68em;display:block;margin:-.05em 0;line-height:1;font-weight:800}
+.hero-names .amp{font-family:'Cormorant Garamond',serif;font-style:normal;color:var(--gold);font-size:.55em;display:block;margin:-.05em 0;line-height:1;font-weight:600}
 .hero-date{display:flex;align-items:center;gap:.8rem;margin-top:1.8rem;opacity:0;animation:fadeUp .9s ease forwards 1.3s}
 .hero-date .rule{flex:1;max-width:45px;height:1px;background:var(--gold);opacity:.5}
 .hero-date span{font-size:clamp(.58rem,2.8vw,.68rem);letter-spacing:.3em;color:var(--muted);text-transform:uppercase;white-space:nowrap}
@@ -187,6 +184,7 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
 .rg{display:flex;gap:.6rem}
 .rb{flex:1;border:1px solid var(--rose);padding:.72rem .4rem;text-align:center;cursor:pointer;font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);transition:all .2s;user-select:none}
 .rb.sel{border-color:var(--gold);background:rgba(107,158,82,.1);color:var(--brown)}
+.rsvp-notice{width:100%;background:rgba(107,158,82,.15);border-left:3px solid rgba(107,158,82,.7);padding:.55rem .75rem;font-size:.72rem;color:var(--brown);letter-spacing:.03em;line-height:1.5;margin-bottom:.3rem}
 .sbtn{width:100%;padding:1.05rem;background:var(--gold);border:none;color:var(--ivory);font-family:'Jost',sans-serif;font-size:.68rem;letter-spacing:.4em;text-transform:uppercase;cursor:pointer;border-radius:0;margin-top:.4rem;transition:background .2s}
 .sbtn:active{background:var(--gold-lt)}
 .rsvp-ok{display:none}
@@ -294,7 +292,7 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
     <!-- Contenido encima del vídeo -->
     <div class="hero-line" style="position:relative;z-index:4"></div>
     <p class="hero-tag" style="position:relative;z-index:4;color:rgba(255,255,255,0.85)">Os invitamos a nuestra boda</p>
-    <h1 class="hero-names" style="position:relative;z-index:4;color:#fff">Sndra<span class="amp">&amp;</span>Samuel</h1>
+    <h1 class="hero-names" style="position:relative;z-index:4;color:#fff">Sandra<span class="amp">&</span>Samuel</h1>
     <div class="hero-date" style="position:relative;z-index:4"><span class="rule"></span><span style="color:rgba(255,255,255,0.8)">19 · Junio · 2027</span><span class="rule"></span></div>
   </div>
 
@@ -571,9 +569,10 @@ html,body{height:100%;overflow:hidden;font-family:'Jost',sans-serif;font-weight:
     <span class="eyebrow s1">Confirmación de asistencia</span>
     <h2 class="slide-title s2">¿Contamos contigo?</h2>
     <form class="rsvp-form s3" id="rsvpForm" onsubmit="submitRSVP(event)">
+      <p class="rsvp-notice">⚠ El formulario debe rellenarse de manera individual.</p>
       <div class="ff"><label>Nombre completo</label><input type="text" name="nombre" placeholder="Tu nombre y apellidos" required autocomplete="name"></div>
       <div class="ff"><label>Asistencia</label>
-        <div class="rg"><div class="rb sel" onclick="selectAttend(this,'yes')">Asistiré 🎉</div><div class="rb" onclick="selectAttend(this,'no')">No podré</div></div>
+        <div class="rg"><div class="rb sel" onclick="selectAttend(this,'yes')">Asistiré 🎉</div><div class="rb" onclick="selectAttend(this,'no')">No podré 😢</div></div>
         <input type="hidden" id="attendValue" name="asistencia" value="yes">
       </div>
       <div class="ff"><label>Alergias o intolerancias</label><input type="text" name="alergias" placeholder="Ninguna · Gluten · Lactosa…"></div>
